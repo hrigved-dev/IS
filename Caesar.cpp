@@ -1,74 +1,71 @@
-#include <iostream>
-#include <string.h>
+#include<iostream>
+#include<string.h>
 using namespace std;
 
-int main()
-{
-    cout << "Enter the message:\n";
-    char msg[100];
-    cin.getline(msg, 100); // take the message as input
+int main() {
+    char message[100];
+    cout<<"Enter the message:\n ";
+    cin.getline(message,100);
+
     int i, j, length, choice, key;
-    cout << "Enter key: ";
-    cin >> key; // take the key as input
-    length = strlen(msg);
-    cout << "Enter your choice \n1. Encryption \n2. Decryption \n";
-    cin >> choice;
-    if (choice == 1)
-    {
-        char ch;
-        for (int i = 0; msg[i] != '\0'; ++i)
-        {
-            ch = msg[i];
-            // encrypt for lowercase letter
-            if (ch >= 'a' && ch <= 'z')
-            {
-                ch = ch + key;
-                if (ch > 'z')
-                {
-                    ch = ch - 'z' + 'a' - 1;
+    key = 3;
+
+    length = strlen(message);
+
+    while(1) {
+        cout<<"Enter your choice: \n1.Encryption \n2. Decryption \n3. Exit \n";
+        cin>>choice;
+
+        if(choice == 1) {
+            char ch;
+            for(i=0; message[i] != '\0'; i++) {
+                ch = message[i];
+                if(ch >= 'a' && ch <= 'z') {
+                    ch = ch + key;
+                    if(ch > 'z') {
+                        ch = ch - 'z' + 'a' - 1;
+                    }
+                    message[i] = ch;
                 }
-                msg[i] = ch;
-            }
-            // encrypt for uppercase letter
-            else if (ch >= 'A' && ch <= 'Z')
-            {
-                ch = ch + key;
-                if (ch > 'Z')
-                {
-                    ch = ch - 'Z' + 'A' - 1;
+
+                else if(ch >= 'A' && ch <= 'Z') {
+                    ch = ch + key;
+                    if (ch > 'Z') {
+                        ch = ch - 'Z' + 'A' - 1;
+                    }
+                    message[i] = ch;
                 }
-                msg[i] = ch;
             }
+            cout<<"Encrypted message: "<<message<<endl;
         }
-        printf("Encrypted message: %s", msg);
-    }
-    else if (choice == 2)
-    { // for decryption
-        char ch;
-        for (int i = 0; msg[i] != '\0'; ++i)
-        {
-            ch = msg[i];
-            // decrypt for lowercase letter
-            if (ch >= 'a' && ch <= 'z')
-            {
-                ch = ch - key;
-                if (ch < 'a')
-                {
-                    ch = ch + 'z' - 'a' + 1;
+        else if(choice == 2) {
+            char ch;
+            for(i=0; message[i] != '\0'; i++) {
+                ch = message[i];
+                if(ch >= 'a' && ch <= 'z') {
+                    ch = ch - key;
+                    if(ch < 'a') {
+                        ch = ch + 'z' - 'a' + 1;
+                    }
+                    message[i] = ch;
                 }
-                msg[i] = ch;
-            }
-            // decrypt for uppercase letter
-            else if (ch >= 'A' && ch <= 'Z')
-            {
-                ch = ch - key;
-                if (ch < 'A')
-                {
-                    ch = ch + 'Z' - 'A' + 1;
+
+                else if(ch >= 'A' && ch <= 'Z') {
+                    ch = ch - key;
+                    if (ch < 'A') {
+                        ch = ch + 'Z' - 'A' + 1;
+                    }
+                    message[i] = ch;
                 }
-                msg[i] = ch;
             }
+            cout<<"Decrypted message: "<<message<<endl;
         }
-        cout << "Decrypted message: " << msg;
+        else if(choice == 3) {
+            break;
+        }
+        else {
+            cout<<"Enter a valid input";
+        }
     }
+    return 0;
 }
