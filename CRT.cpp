@@ -1,55 +1,96 @@
-#include <bits/stdc++.h>
+#include <conio.h>
+#include <stdlib.h>
+#include <iostream>
 using namespace std;
 
-int inv(int a, int m)
-{
-	int m0 = m, t, q;
-	int x0 = 0, x1 = 1;
-
-	if (m == 1)
-		return 0;
-
-	while (a > 1) {
-		q = a / m;
-
-		t = m;
-
-		m = a % m, a = t;
-
-		t = x0;
-
-		x0 = x1 - q * x0;
-
-		x1 = t;
-	}
-
-	if (x1 < 0)
-		x1 += m0;
-
-	return x1;
+int gcd( int a, int b) {
+  	int c = 0;
+  	while ( b != 0)
+	{ 
+		c = a % b;
+    	a = b;
+    	b = c;
+    }
+  	return a;
 }
 
-int findMinX(int num[], int rem[], int k)
-{
-	int prod = 1;
-	for (int i = 0; i < k; i++)
-		prod *= num[i];
-
-	int result = 0;
-
-	for (int i = 0; i < k; i++) {
-		int pp = prod / num[i];
-		result += rem[i] * inv(pp, num[i]) * pp;
+int inverse( int a, int b) {
+   int pa[100],q[100],x[100];
+   int n,i,j;
+   
+   pa[0]=b; 
+   pa[1]=a; 
+   
+   i=0;
+   
+   while(pa[i]%pa[i+1]!=0)   //compute the pa and the q column
+     {
+       pa[i+2]=pa[i]%pa[i+1];
+       q[i+1]=pa[i]/pa[i+1];
+       i++;
+     }
+   
+   
+   n=i+1; 
+   x[n]=0; 
+   x[n-1]=1;
+   for(j=n-2;j>=0;j--)  
+	   x[j]=x[j+1]*q[j+1] + x[j+2];//compute x column
+    
+   
+   if((x[1]*pa[0])>(x[0]*pa[1])) 	
+	{
+		x[0]=b-x[0];
 	}
 
-	return result % prod;
+   return x[0];
+
 }
 
-int main(void)
-{
-	int num[] = { 3, 4, 5 };
-	int rem[] = { 2, 3, 1 };
-	int k = sizeof(num) / sizeof(num[0]);
-	cout << "x is " << findMinX(num, rem, k);
-	return 0;
+int main() {
+	int k=3;
+	int *a=new int[k];
+	int *mi=new int[k];
+	int *Mi=new int[k];
+	int M;
+	int *yi=new int[k];
+
+	for (int i=0; i<k; i++) {
+	cout<<"value of a"<<i+1<<":";
+	cin>>a[i];
+	cout<<"value of m"<<i+1<<":";
+	cin>>mi[i];
+	}
+
+//  check for relatively prime
+	for(int i=0; i<k; i++) {
+		for(int j=i+1; j<k; j++)
+			if (1 != gcd( mi[i], mi[j]))
+				cout<<"moduli are not relatively prime";
+}
+   
+//  equations
+	M=1;
+	for(int i=0; i<k; i++) {
+		M = M*mi[i];     //7*3*5=105
+	}
+
+	for(int i=0; i<k; i++) {
+		Mi[i] = M / mi[i]; //Mi[0]=15, Mi[1]=35, Mi[2]=21
+	}
+
+	for(int i=0; i<k; i++) {
+		yi[i] = inverse(Mi[i],mi[i]); //yi[0]=1, yi[1]=2, yi[2]=1 
+	}
+
+	int x=0;
+	for(int i=0; i<k; i++) {
+	 	x = x + ( a[i]*Mi[i]*yi[i]); //=2*15*1 + 2*35*2 + 3*21*1
+	}
+
+	int res = x % M; //233%105=23
+	//  print result
+
+	printf("\n\nx = %d = %d (mod %d)\n", x, res, M);
+	//  ---------------------------------------------------------
 }

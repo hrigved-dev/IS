@@ -37,8 +37,7 @@ public class Main {
 	}
 
 	// Driver code
-	public static void main(String args[]) throws
-									NoSuchAlgorithmException
+	public static void main(String args[]) throws NoSuchAlgorithmException
 	{
         Scanner sc=new Scanner(System.in);  
         
