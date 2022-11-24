@@ -8,7 +8,7 @@ int main() {
     cin.getline(message,100);
 
     int i, j, length, choice, key;
-    key = 3;
+    key = 3; // Since it is Caesar Cipher
 
     length = strlen(message);
 

@@ -2,27 +2,6 @@
 using namespace std;
 #define SIZE 30
 
-// Function to convert the string to lowercase
-void toLowerCase(char plain[], int ps)
-{
-	int i;
-	for (i = 0; i < ps; i++) {
-		if (plain[i] > 64 && plain[i] < 91)
-			plain[i] += 32;
-	}
-}
-
-// Function to remove all spaces in a string
-int removeSpaces(char* plain, int ps)
-{
-	int i, count = 0;
-	for (i = 0; i < ps; i++)
-		if (plain[i] != ' ')
-			plain[count++] = plain[i];
-	plain[count] = '\0';
-	return count;
-}
-
 // Function to generate the 5x5 key square
 void generateKeyTable(char key[], int ks, char keyT[5][5])
 {
@@ -136,13 +115,9 @@ void encryptByPlayfairCipher(char str[], char key[])
 
 	// Key
 	ks = strlen(key);
-	ks = removeSpaces(key, ks);
-	toLowerCase(key, ks);
 
 	// Plaintext
 	ps = strlen(str);
-	toLowerCase(str, ps);
-	ps = removeSpaces(str, ps);
 
 	ps = prepare(str, ps);
 
